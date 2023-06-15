@@ -1,19 +1,22 @@
 package org.restaurantmenu.java;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 public class MenuItem {
-
+    private final int DAYS_NEW = 30;
      private String name;
      private Double price;
      private String category;
      private String description;
-     private boolean newItem;
+
+     private LocalDate dateAdded = LocalDate.now();
 
      public MenuItem(String aName, Double aPrice, String aCategory, String aDescription) {
          this.name = aName;
          this.price = aPrice;
          this.category = aCategory;
          this.description = aDescription;
-         this.newItem = true;
      }
      public String getName() {
          return this.name;
@@ -27,9 +30,7 @@ public class MenuItem {
      public String getDescription() {
          return this.description;
      }
-     public boolean getNewItem() {
-         return this.newItem;
-     }
+
      private void setName(String newName) {
          this.name = newName;
      }
@@ -42,7 +43,33 @@ public class MenuItem {
      public void setDescription(String newDescription) {
          this.description = newDescription;
      }
-     public void setNewItem() {
-         this.newItem = false;
+     public boolean checkIfNew() {
+         LocalDate today = LocalDate.now();
+         long datesBetween = ChronoUnit.DAYS.between(dateAdded,today);
+         if (datesBetween > DAYS_NEW) {
+             return false;
+         } else {
+             return true;
+         }
      }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MenuItem)) return false;
+        MenuItem menuItem = (MenuItem) o;
+        return Objects.equals(name, menuItem.name) && Objects.equals(price, menuItem.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, price);
+    }
+    @Override
+    public String toString() {
+         return name + " - " + price + " (" + category + ") " + "/n"+description;
+    }
+    public void printMenuItem() {
+         System.out.println(this.toString());
+    }
 }

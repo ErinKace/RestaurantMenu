@@ -1,28 +1,32 @@
 package org.restaurantmenu.java;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+
+
 
 public class Menu {
      private ArrayList<MenuItem> menuItems = new ArrayList<>();
-     private Date dateLastUpdated;
+     private LocalDate dateLastUpdated = LocalDate.now();
      public Menu() {
-         this.dateLastUpdated = new Date();
      }
      public Menu(ArrayList<MenuItem> newMenuList) {
          this.menuItems = newMenuList;
-         this.dateLastUpdated = new Date();
+         this.dateLastUpdated = LocalDate.now();
      }
 
      public ArrayList<MenuItem> getMenuItems() {
          return this.menuItems;
      }
-     public Date getDateLastUpdated() {
+     public LocalDate getDateLastUpdated() {
          return this.dateLastUpdated;
      }
+    private void setDateLastUpdated() {
+        this.dateLastUpdated = LocalDate.now();
+    }
      public void addMenuItem(MenuItem newMenuItem) {
          this.menuItems.add(newMenuItem);
-         this.dateLastUpdated = new Date();
+         setDateLastUpdated();
      }
      public void removeMenuItem(String itemToRemove) {
          MenuItem objectToRemove;
@@ -31,12 +35,16 @@ public class Menu {
                  objectToRemove = item;
                  int itemIndex = this.menuItems.indexOf(objectToRemove);
                  this.menuItems.remove(itemIndex);
+                 setDateLastUpdated();
              } else {
                  System.out.println("Item not found");
              }
          }
      }
-     private void setDateLastUpdated() {
-         this.dateLastUpdated = new Date();
+     public void printMenu() {
+         for (MenuItem item : menuItems) {
+             System.out.println(item.toString());
+         }
      }
+
 }
