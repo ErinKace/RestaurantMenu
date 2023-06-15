@@ -27,8 +27,10 @@ public class Menu {
         this.dateLastUpdated = LocalDate.now();
     }
      public void addMenuItem(MenuItem newMenuItem) {
-         this.menuItems.add(newMenuItem);
-         setDateLastUpdated();
+         if (!this.menuItems.contains(newMenuItem)) {
+             this.menuItems.add(newMenuItem);
+             setDateLastUpdated();
+         }
      }
      public void removeMenuItem(String itemToRemove) {
          MenuItem objectToRemove = null;
