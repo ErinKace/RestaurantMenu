@@ -20,7 +20,10 @@ public class Restaurant {
 
         MenuItem[] startingList = {cheesePizza, frenchFries, chocolateCake};
         ArrayList<MenuItem> startingMenu = new ArrayList<>(List.of(startingList));
-        Menu mainRestaurantMenu = new Menu();
+        Menu mainRestaurantMenu = new Menu(startingMenu);
+        mainRestaurantMenu.printMenu();
+        mainRestaurantMenu.getMenuItem(0).printMenuItem();
+        mainRestaurantMenu.removeMenuItem("French Fries");
         mainRestaurantMenu.printMenu();
 
     }

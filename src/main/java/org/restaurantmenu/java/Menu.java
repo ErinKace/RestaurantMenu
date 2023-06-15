@@ -12,11 +12,13 @@ public class Menu {
      }
      public Menu(ArrayList<MenuItem> newMenuList) {
          this.menuItems = newMenuList;
-         this.dateLastUpdated = LocalDate.now();
      }
 
      public ArrayList<MenuItem> getMenuItems() {
          return this.menuItems;
+     }
+     public MenuItem getMenuItem(int index) {
+         return this.menuItems.get(index);
      }
      public LocalDate getDateLastUpdated() {
          return this.dateLastUpdated;
@@ -29,21 +31,23 @@ public class Menu {
          setDateLastUpdated();
      }
      public void removeMenuItem(String itemToRemove) {
-         MenuItem objectToRemove;
+         MenuItem objectToRemove = null;
          for (MenuItem item : this.menuItems) {
              if (item.getName().equals(itemToRemove)) {
                  objectToRemove = item;
                  int itemIndex = this.menuItems.indexOf(objectToRemove);
                  this.menuItems.remove(itemIndex);
                  setDateLastUpdated();
-             } else {
-                 System.out.println("Item not found");
              }
+         }
+         if (objectToRemove == null) {
+             System.out.println("Item Not Found");
          }
      }
      public void printMenu() {
          for (MenuItem item : menuItems) {
              System.out.println(item.toString());
+             System.out.println();
          }
      }
 

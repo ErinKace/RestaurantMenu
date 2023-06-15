@@ -67,7 +67,7 @@ public class MenuItem {
     }
     @Override
     public String toString() {
-         return name + " - " + price + " (" + category + ") " + "/n"+description;
+         return name + " - $" + price + "\n(" + category + ") " + "\n"+description;
     }
     public void printMenuItem() {
          System.out.println(this.toString());
