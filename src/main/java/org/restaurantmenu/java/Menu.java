@@ -2,33 +2,39 @@ package org.restaurantmenu.java;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+import java.util.Comparator;
 
 
 public class Menu {
+    private String menuTitle;
      private ArrayList<MenuItem> menuItems = new ArrayList<>();
      private LocalDate dateLastUpdated = LocalDate.now();
-     public Menu() {
+     public Menu(String aMenuTitle) {
+         this.menuTitle = aMenuTitle;
      }
-     public Menu(ArrayList<MenuItem> newMenuList) {
+     public Menu(String aMenuTitle, ArrayList<MenuItem> newMenuList) {
+         this.menuTitle = aMenuTitle;
          this.menuItems = newMenuList;
+     }
+     public String getMenuTitle() {
+         return menuTitle;
      }
 
      public ArrayList<MenuItem> getMenuItems() {
-         return this.menuItems;
+         return menuItems;
      }
      public MenuItem getMenuItem(int index) {
-         return this.menuItems.get(index);
+         return menuItems.get(index);
      }
      public LocalDate getDateLastUpdated() {
-         return this.dateLastUpdated;
+         return dateLastUpdated;
      }
     private void setDateLastUpdated() {
-        this.dateLastUpdated = LocalDate.now();
+        dateLastUpdated = LocalDate.now();
     }
      public void addMenuItem(MenuItem newMenuItem) {
-         if (!this.menuItems.contains(newMenuItem)) {
-             this.menuItems.add(newMenuItem);
+         if (!menuItems.contains(newMenuItem)) {
+             menuItems.add(newMenuItem);
              setDateLastUpdated();
          }
      }
@@ -46,11 +52,26 @@ public class Menu {
              System.out.println("Item Not Found");
          }
      }
-     public void printMenu() {
-         for (MenuItem item : menuItems) {
-             System.out.println(item.toString());
-             System.out.println();
-         }
+     public void sortByCategory() {
+         menuItems.sort((m1, m2)
+                 -> m1.getCategory().compareTo(m2.getCategory()));
+     }
+     public void sortByCategoryAndPrice() {
+         Comparator<MenuItem> sortByCategoryAndPrice
+                 = Comparator.comparing(MenuItem :: getCategory).thenComparing(MenuItem :: getPrice);
+         menuItems.sort(sortByCategoryAndPrice);
      }
 
+
+    @Override
+    public String toString() {
+         this.sortByCategoryAndPrice();
+        String returnStr = menuTitle+"\n";
+        returnStr += "\nDate Last Updated: "+dateLastUpdated+"\n";
+
+        for (MenuItem item : menuItems) {
+            returnStr += "\n"+item.toString()+"\n";
+        }
+        return returnStr;
+    }
 }

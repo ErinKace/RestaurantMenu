@@ -67,9 +67,13 @@ public class MenuItem {
     }
     @Override
     public String toString() {
-         return name + " - $" + price + "\n(" + category + ") " + "\n"+description;
-    }
-    public void printMenuItem() {
-         System.out.println(this.toString());
+         String returnStr = name;
+         if (checkIfNew()) {
+             returnStr = "*NEW* "+returnStr;
+         }
+         returnStr += " - $" + price;
+         returnStr += "\n(" + category + ") ";
+         returnStr += "\n"+description;
+         return returnStr;
     }
 }
